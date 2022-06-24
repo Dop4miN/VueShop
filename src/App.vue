@@ -1,6 +1,6 @@
 <template>
   <nav class="d-flex">
-    <div class="brand">Super Fancy Store</div>
+    <div class="brand d-flex">Super Fancy Store</div>
 
     <div class="shopping-cart-wrapper position-relative">
       <div class="icon position-relative" @click.prevent="toggleShowCart()">
@@ -43,6 +43,7 @@ export default {
         async getData() {
             try {
                 const response = await axios.get(
+                    // had to use a different API, since fakestoreapi.com is down
                     "https://api.escuelajs.co/api/v1/products"
                 );
                 this.products = response.data;
@@ -120,6 +121,12 @@ nav {
   position: fixed;
   left: 0;
   right: 0;
+  z-index: 1;
+
+  .brand {
+    align-self: center;
+    font-weight: bold;
+  }
 
   .shopping-cart-wrapper {
     .icon {
@@ -144,11 +151,16 @@ nav {
         &.active {
             display: block;
         }
+
       background-color: $white;
       display: none;
       border: 1px solid;
       right: 0;
-      width: 20rem;
+      width: calc(100vw - 2rem);
+
+      @media (min-width: 500px) {
+        width: 27.5rem;
+      }
     }
   }
 }
@@ -156,5 +168,6 @@ nav {
 .products {
     flex-wrap: wrap;
     justify-content: space-around;
+    padding-top: 5rem;
 }
 </style>
