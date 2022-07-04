@@ -4,8 +4,17 @@
 
     <div class="shopping-cart-wrapper position-relative">
       <div class="icon position-relative" @click.prevent="toggleShowCart()">
-        <img class="img-fluid" src="./assets/shopping-cart-icon.png" alt="Shopping Cart" />
-        <span v-if="cartItemCounter > 0" class="cartItemCounter position-absolute">{{ cartItemCounter }}</span>
+        <img
+          class="img-fluid"
+          src="./assets/shopping-cart-icon.png"
+          alt="Shopping Cart"
+        />
+        <span
+          v-if="cartItemCounter > 0"
+          class="cartItemCounter position-absolute"
+        >
+          {{ cartItemCounter }}
+        </span>
       </div>
 
       <div id="shopping-cart" class="shopping-cart position-absolute">
@@ -22,51 +31,51 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 
-import CartItem from './components/cart/CartItem.vue'
-import CartSummary from './components/cart/CartSummary.vue'
-import ProductItem from './components/products/ProductItem.vue'
+import CartItem from "./components/cart/CartItem.vue";
+import CartSummary from "./components/cart/CartSummary.vue";
+import ProductItem from "./components/products/ProductItem.vue";
 
 export default {
-    mounted() {
-        this.$store.commit('updateCartFromLocalStorage')
+  mounted() {
+    this.$store.commit("updateCartFromLocalStorage");
+  },
+  name: "HomeView",
+  components: { CartItem, CartSummary, ProductItem },
+  data() {
+    return {
+      products: [],
+    };
+  },
+  methods: {
+    async getData() {
+      try {
+        const response = await axios.get(
+          // had to use a different API, since fakestoreapi.com is down
+          "https://api.escuelajs.co/api/v1/products"
+        );
+        this.products = response.data;
+      } catch (err) {
+        console.log(err);
+      }
     },
-    name: "HomeView",
-    components: { CartItem, CartSummary, ProductItem },
-    data() {
-        return {
-            products: []
-        };
+    toggleShowCart() {
+      document.getElementById("shopping-cart").classList.toggle("active");
     },
-    methods: {
-        async getData() {
-            try {
-                const response = await axios.get(
-                    // had to use a different API, since fakestoreapi.com is down
-                    "https://api.escuelajs.co/api/v1/products"
-                );
-                this.products = response.data;
-            } catch (err) {
-                console.log(err)
-            }
-        },
-        toggleShowCart() {
-            document.getElementById('shopping-cart').classList.toggle('active')
-        }
+  },
+  created() {
+    this.getData();
+  },
+  computed: {
+    items() {
+      return this.$store.getters.cartItems;
     },
-    created() {
-        this.getData();
+    cartItemCounter() {
+      return this.items.length;
     },
-    computed: {
-        items() {
-            return this.$store.getters.cartItems
-        },
-        cartItemCounter() {
-            return this.items.length
-        }
-    }
-}
+  },
+};
 </script>
 
 <style lang="scss">
@@ -148,9 +157,9 @@ nav {
       }
     }
     .shopping-cart {
-        &.active {
-            display: block;
-        }
+      &.active {
+        display: block;
+      }
 
       background-color: $white;
       display: none;
@@ -166,8 +175,8 @@ nav {
 }
 
 .products {
-    flex-wrap: wrap;
-    justify-content: space-around;
-    padding-top: 5rem;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding-top: 5rem;
 }
 </style>

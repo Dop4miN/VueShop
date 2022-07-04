@@ -1,11 +1,19 @@
 <template>
   <div class="card d-flex position-relative">
-    <img class="img-fluid product-image" :src="product.images[0]" :alt="product.title">
+    <img
+      class="img-fluid product-image"
+      :src="product.images[0]"
+      :alt="product.title"
+    />
     <div class="product-info">
       <h3 class="title">{{ product.title }}</h3>
       <p class="description">{{ product.description }}</p>
       <div class="button" @click.prevent="addToCart()">
-        <img class="img-fluid icon" src="../../assets/shopping-cart-icon.png" alt="Shopping Cart" />
+        <img
+          class="img-fluid icon"
+          src="../../assets/shopping-cart-icon.png"
+          alt="Shopping Cart"
+        />
         ${{ product.price.toFixed(2) }}
       </div>
     </div>
@@ -14,13 +22,13 @@
 
 <script>
 export default {
-    props: ['product'],
-    methods: {
-        addToCart() {
-            this.$store.commit('addToCart', this.product)
-        }
-    }
-}
+  props: ["product"],
+  methods: {
+    addToCart() {
+      this.$store.commit("addToCart", this.product);
+    },
+  },
+};
 </script>
 
 <style scoped lang="scss">
@@ -31,7 +39,7 @@ export default {
   flex-direction: column;
   justify-content: space-between;
   overflow: hidden;
-  
+
   .product-image {
     transition: filter 0.5s;
   }
@@ -42,7 +50,6 @@ export default {
     width: calc(100% - 4rem);
 
     .title {
-
     }
     .description {
       font-size: 0.85rem;

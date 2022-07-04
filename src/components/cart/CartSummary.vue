@@ -12,15 +12,18 @@
 
 <script>
 export default {
-    computed: {
-        cart_total() {
-            return this.$store.getters.cartItems.reduce((a, b) => a + (b.price * b.quantity), 0)
-        },
-        items() {
-            return this.$store.getters.cartItems.length > 0
-        }
-    }
-}
+  computed: {
+    cart_total() {
+      return this.$store.getters.cartItems.reduce(
+        (a, b) => a + b.price * b.quantity,
+        0
+      );
+    },
+    items() {
+      return this.$store.getters.cartItems.length > 0;
+    },
+  },
+};
 </script>
 
 <style scoped lang="scss">

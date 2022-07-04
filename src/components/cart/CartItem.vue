@@ -3,7 +3,10 @@
     <h3 class="title">{{ item.title }}</h3>
 
     <div class="d-flex noselect">
-      <div class="circle remove position-relative" @click.prevent="removeFromCart()">
+      <div
+        class="circle remove position-relative"
+        @click.prevent="removeFromCart()"
+      >
         <span class="position-absolute">-</span>
       </div>
 
@@ -18,16 +21,16 @@
 
 <script>
 export default {
-    props: ['item'],
-    methods: {
-        addToCart() {
-            this.$store.commit('addToCart', this.item)
-        },
-        removeFromCart() {
-            this.$store.commit('removeFromCart', this.item)
-        }
-    }
-}
+  props: ["item"],
+  methods: {
+    addToCart() {
+      this.$store.commit("addToCart", this.item);
+    },
+    removeFromCart() {
+      this.$store.commit("removeFromCart", this.item);
+    },
+  },
+};
 </script>
 
 <style scoped lang="scss">
